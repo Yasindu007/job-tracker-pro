@@ -1,17 +1,31 @@
+// src/App.js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
+import { AuthProvider } from "./context/AuthContext";
+import { JobProvider } from "./context/JobContext";
+import Login from "./pages/LoginPage";
+import Register from "./pages/RegisterPage";
+import Dashboard from "./pages/DashboardPage";
+import JobDetail from "./pages/JobDetail"; // ⬅️ Import this
+
+// Inside your <Routes>:
+<Route path="/job/:id" element={<JobDetail />} />
+
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <JobProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/job/:id" element={<JobDetail />} />
+            
+          </Routes>
+        </BrowserRouter>
+      </JobProvider>
+    </AuthProvider>
   );
 }
 
